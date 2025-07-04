@@ -105,3 +105,69 @@ button:hover {
     opacity: 1;
   }
 }
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom right, #111, #222);
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.tile {
+  width: 100%;
+  aspect-ratio: 1;
+  font-size: 2em;
+  color: white;
+  font-weight: bold;
+  background: #e53935;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+
+.tile.empty {
+  background-color: #333;
+}
+
+img.thinking {
+  max-width: 80px;
+  margin-top: 20px;
+}
+
+.socho-text {
+  font-size: 1.1em;
+  color: #fff;
+  margin-top: 8px;
+  font-style: normal;
+  text-align: center;
+}
+
+/* Make Review button fixed on small screens */
+.review-btn {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  font-size: 14px;
+  padding: 6px 10px;
+}
