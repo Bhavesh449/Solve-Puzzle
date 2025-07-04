@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8" />
   <title>Review - Solve Puzzle</title>
   <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-app-compat.js"></script>
@@ -81,6 +82,76 @@
       color: #aaa;
       margin-top: 5px;
     }
+    body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #111;
+  color: #fff;
+}
+
+.review-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input, textarea, select, button {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 1em;
+}
+
+button {
+  background: #4caf50;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #43a047;
+}
+
+.review-card {
+  background: #1c1c1c;
+  padding: 15px;
+  margin-top: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+}
+
+.review-card h3 {
+  margin: 0 0 5px;
+}
+
+.timestamp {
+  font-size: 0.85em;
+  color: #aaa;
+  text-align: right;
+  margin-top: 8px;
+}
+
+/* Mobile first! */
+@media (max-width: 600px) {
+  input, textarea, select, button {
+    font-size: 1em;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -219,6 +290,12 @@
 
     loadReviews();
   </script>
+<div class="review-container">
+  <!-- form elements, review list, etc. -->
+</div>
+<div style="text-align: center; color: #ccc; padding: 50px;">
+   Be the first to review!
+</div>
 
 </body>
 </html>
