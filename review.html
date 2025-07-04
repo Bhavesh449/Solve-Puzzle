@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Review - Solve Puzzle</title>
+  <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore-compat.js"></script>
+  <style>
+    body {
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #fff;
+      color: #111;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .stars {
+      margin-top: 10px;
+    }
+
+    .star {
+      font-size: 28px;
+      cursor: pointer;
+      color: #444;
+      transition: color 0.3s;
+    }
+
+    .star.selected {
+      color: gold;
+    }
+
+    #reviews {
+      margin-top: 40px;
+    }
+
+    .review-card {
+      background: #1e1e1e;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .review-card h3 {
+      margin: 0 0 5px 0;
+      color: #ff5e5e;
+    }
+
+    .review-card p {
+      margin: 5px 0;
+    }
+
+    .timestamp {
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📝 Leave a Review</h1>
+
+  <input type="text" id="name" placeholder="Your Name" /><br />
+  <textarea id="review" placeholder="Your thoughts about the game..."></textarea><br />
+
+  <div class="stars" id="starContainer">
+    <span class="star" data-value="1">★</span>
+    <span class="star" data-value="2">★</span>
+    <span class="star" data-value="3">★</span>
+    <span class="star" data-value="4">★</span>
+    <span class="star" data-value="5">★</span>
+  </div>
+
+  <button onclick="submitReview()">Submit Review</button>
+
+  <div id="reviews">
+    <h2>⭐ Public Reviews</h2>
+    <div id="reviewList"></div>
+  </div>
+<script>
+  function getTimeAgo(timestamp) {
+    const now = new Date();
+    const posted = timestamp.toDate();
+    const secondsAgo = Math.floor((now - posted) / 1000);
+
+    if (secondsAgo < 60) return 'Just now';
+    if (secondsAgo < 3600) return `${Math.floor(secondsAgo / 60)} min ago`;
+    if (secondsAgo < 86400) return `${Math.floor(secondsAgo / 3600)} hour(s) ago`;
+    if (secondsAgo < 604800) return `${Math.floor(secondsAgo / 86400)} day(s) ago`;
+    if (secondsAgo < 2592000) return `${Math.floor(secondsAgo / 604800)} week(s) ago`;
+    return `${Math.floor(secondsAgo / 2592000)} month(s) ago`;
+  }
+</script>
+
+  <script>
+    // ✅ Replace with your Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyDZ33kQmY0GCy5DZE8CBNFsNBQL2Yl0CUY",
+  authDomain: "solve-puzzle1234.firebaseapp.com",
+  projectId: "solve-puzzle1234",
+  storageBucket: "solve-puzzle1234.firebasestorage.app",
+  messagingSenderId: "211823350444",
+  appId: "1:211823350444:web:92fc670eb8824e4814c509"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    let selectedRating = 0;
+
+    // ⭐ Star rating logic
+    const stars = document.querySelectorAll(".star");
+    stars.forEach(star => {
+      star.addEventListener("click", () => {
+        selectedRating = parseInt(star.getAttribute("data-value"));
+        updateStarSelection();
+      });
+    });
+
+    function updateStarSelection() {
+      stars.forEach(star => {
+        const value = parseInt(star.getAttribute("data-value"));
+        star.classList.toggle("selected", value <= selectedRating);
+      });
+    }
+
+    // 📤 Submit review
+    function submitReview() {
+  const name = document.getElementById("name").value.trim();
+  const review = document.getElementById("review").value.trim();
+
+  if (name === "") {
+    alert("❗ Please enter your name.");
+    return;
+  }
+
+  if (selectedRating === 0) {
+    alert("❗ Please select a star rating.");
+    return;
+  }
+
+  db.collection("reviews").add({
+    name,
+    review: review || "", // optional review
+    rating: selectedRating,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(() => {
+    alert("✅ Thanks for your feedback!");
+    document.getElementById("name").value = "";
+    document.getElementById("review").value = "";
+    selectedRating = 0;
+    updateStarSelection();
+  }).catch((error) => {
+    console.error("Error saving review: ", error);
+    alert("❌ Failed to submit review.");
+  });
+}
+
+   function loadReviews() {
+  db.collection("reviews")
+    .orderBy("timestamp", "desc")
+    .onSnapshot(snapshot => {
+      const reviewList = document.getElementById("reviewList");
+      reviewList.innerHTML = "";
+
+      if (snapshot.empty) {
+        reviewList.innerHTML = `
+          <div style="display: flex; justify-content: center; align-items: center; height: 150px;">
+            <p style="font-size: 20px; color: #ccc; text-align: center;">
+               Be the first to review this game!
+            </p>
+          </div>`;
+        return;
+      }
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const starsHtml = "★".repeat(data.rating || 0) + "☆".repeat(5 - (data.rating || 0));
+        const reviewEl = document.createElement("div");
+        reviewEl.className = "review-card";
+        reviewEl.innerHTML = `
+          <h3>${data.name}</h3>
+          <div>${starsHtml}</div>
+          <p>${data.review || ""}</p>
+          <div class="timestamp">${data.timestamp ? getTimeAgo(data.timestamp) : 'Just now'}</div>
+        `;
+        reviewList.appendChild(reviewEl);
+      });
+    });
+}
+
+
+    loadReviews();
+  </script>
+
+</body>
+</html>
