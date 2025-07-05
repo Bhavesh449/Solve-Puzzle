@@ -72,7 +72,7 @@
 
     .review-card h3 {
       margin: 0 0 5px 0;
-      color: #ff5e5e;
+      color: #ffffff;
     }
 
     .review-card p {
@@ -186,6 +186,33 @@ body {
   z-index: 999;
   font-family: 'Poppins', sans-serif;
 }
+.review-card {
+  background: #1c1c1c;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.05);
+  max-width: 90%;
+  transition: all 0.3s ease;
+}
+
+.user-review {
+  margin-left: auto;
+  text-align: right;
+  border-left: 4px solid #444;
+}
+
+.owner-review {
+  margin-right: auto;
+  text-align: left;
+  background: linear-gradient(to right, #ffdb3d, #ca9b00);
+  border-left: 5px solid rgb(255, 255, 255);
+  color: #634f4f;
+}
+
+.owner-review h3 {
+  color: rgb(182, 0, 0);
+}
 
   </style>
 </head>
@@ -223,6 +250,7 @@ body {
     if (secondsAgo < 2592000) return `${Math.floor(secondsAgo / 604800)} week(s) ago`;
     return `${Math.floor(secondsAgo / 2592000)} month(s) ago`;
   }
+  
 </script>
 
   <script>
@@ -307,18 +335,22 @@ body {
       }
 
       snapshot.forEach(doc => {
-        const data = doc.data();
-        const starsHtml = "★".repeat(data.rating || 0) + "☆".repeat(5 - (data.rating || 0));
-        const reviewEl = document.createElement("div");
-        reviewEl.className = "review-card";
-        reviewEl.innerHTML = `
-          <h3>${data.name}</h3>
-          <div>${starsHtml}</div>
-          <p>${data.review || ""}</p>
-          <div class="timestamp">${data.timestamp ? getTimeAgo(data.timestamp) : 'Just now'}</div>
-        `;
-        reviewList.appendChild(reviewEl);
-      });
+  const data = doc.data();
+  const starsHtml = "★".repeat(data.rating || 0) + "☆".repeat(5 - (data.rating || 0));
+
+  const isOwner = data.name === "BhaveshOwner";
+
+  const reviewEl = document.createElement("div");
+  reviewEl.className = `review-card ${isOwner ? "owner-review" : "user-review"}`;
+  reviewEl.innerHTML = `
+    <h3>${isOwner ? "👑 Owner: Bhavesh" : data.name}</h3>
+    <div>${starsHtml}</div>
+    <p>${data.review || ""}</p>
+    <div class="timestamp">${data.timestamp ? getTimeAgo(data.timestamp) : "Just now"}</div>
+  `;
+  reviewList.appendChild(reviewEl);
+});
+
     });
 }
 
