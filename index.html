@@ -327,12 +327,23 @@ body {
 
   winOverlay.classList.add("show");
   setTimeout(() => {
-    winOverlay.classList.remove("show");
-    shuffle(); // Automatically shuffle for next match
-  }, 4000);
+  shufflePuzzle(false); // 🚫 No sound after win
+}, 2000); // After 2 sec transition
 }
 
     window.onload = shuffle;
+  function shufflePuzzle(playSound = true) {
+  // ... existing shuffling logic ...
+
+  if (playSound) {
+    const shuffleSound = new Audio('shuffle.wav');
+    shuffleSound.play();
+  }
+}
+document.getElementById("shuffleBtn").addEventListener("click", () => {
+  shufflePuzzle(true); // ✅ Play sound
+});
+
   </script>
 <a href="review.html" class="review-btn" target="_blank">📝 Review</a>
 <div class="game-container">
