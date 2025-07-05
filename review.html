@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <title>Review - Solve Puzzle</title>
   <link rel="icon" type="image/png" href="puzzle.png">
+
   <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore-compat.js"></script>
   <style>
@@ -152,6 +153,39 @@ button:hover {
     font-size: 1em;
   }
 }
+.footer-credit {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #ccc;
+  background: transparent;
+  z-index: 10;
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-credit {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  font-style: italic;
+  color: #ccc;
+  background: transparent;
+  z-index: 999;
+  font-family: 'Poppins', sans-serif;
+}
 
   </style>
 </head>
@@ -173,7 +207,7 @@ button:hover {
   <button onclick="submitReview()">Submit Review</button>
 
   <div id="reviews">
-    <h2>⭐ Public Reviews</h2>
+    <h2> Public Reviews</h2>
     <div id="reviewList"></div>
   </div>
 <script>
@@ -294,9 +328,8 @@ button:hover {
 <div class="review-container">
   <!-- form elements, review list, etc. -->
 </div>
-<div style="text-align: center; color: #ccc; padding: 50px;">
-   Be the first to review!
-</div>
-
+<footer class="footer-credit">
+  <strong><em>Made by Bhavesh</em></strong>
+</footer>
 </body>
 </html>
