@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>Solve Puzzle 🧩</title>
   <link rel="icon" type="image/png" href="puzzle.png">
+
   <style>
     * {
       box-sizing: border-box;
@@ -186,6 +187,39 @@
 .review-btn:hover {
   background: #e0e0e0;
 }
+.footer-credit {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  color: #ccc;
+  background: transparent;
+  z-index: 10;
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.footer-credit {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  font-style: italic;
+  color: #ccc;
+  background: transparent;
+  z-index: 999;
+  font-family: 'Poppins', sans-serif;
+}
 
   </style>
 </head>
@@ -210,11 +244,11 @@
     <img src="thinking.png" alt="Thinking...">
     <p>Socho</p>
   </div>
-
+ 
   <div class="win-overlay" id="winOverlay">
     <div class="win-popup">
       <div class="emoji">🎉</div>
-      <h2>You Won!</h2>
+      <h2>You Won 1st Match!</h2>
       <p>Score: <span id="popupScore">0</span></p>
     </div>
   </div>
@@ -308,6 +342,10 @@
   <!-- Thinking Image -->
   <!-- Socho -->
 </div>
+<footer class="footer-credit">
+  <strong><em>Made by Bhavesh</em></strong>
+</footer>
+
 
 </body>
 </html>
