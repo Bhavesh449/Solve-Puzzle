@@ -213,6 +213,18 @@ body {
 .owner-review h3 {
   color: rgb(182, 0, 0);
 }
+.review-card h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.1em;
+}
+
+.tick-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
 
   </style>
 </head>
@@ -333,17 +345,28 @@ body {
           </div>`;
         return;
       }
+const verifiedNames = ["Mayank", "Rehan", "BhaveshOwner"];
 
-      snapshot.forEach(doc => {
+snapshot.forEach(doc => {
   const data = doc.data();
   const starsHtml = "★".repeat(data.rating || 0) + "☆".repeat(5 - (data.rating || 0));
 
-  const isOwner = data.name === "BhaveshOwner";
+  const rawName = data.name || "Anonymous";
+  const isOwner = rawName === "BhaveshOwner";
+
+  // Capitalize first letter and handle owner label
+  const displayName = isOwner ? "Owner: Bhavesh" : rawName.charAt(0).toUpperCase() + rawName.slice(1);
+
+  // Check if tick should be shown
+  const showTick = verifiedNames.includes(rawName);
 
   const reviewEl = document.createElement("div");
   reviewEl.className = `review-card ${isOwner ? "owner-review" : "user-review"}`;
   reviewEl.innerHTML = `
-    <h3>${isOwner ? "👑 Owner: Bhavesh" : data.name}</h3>
+    <h3>
+  ${displayName}${showTick ? `<img src="tick.png" class="tick-icon">` : ""}
+</h3>
+
     <div>${starsHtml}</div>
     <p>${data.review || ""}</p>
     <div class="timestamp">${data.timestamp ? getTimeAgo(data.timestamp) : "Just now"}</div>
