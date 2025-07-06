@@ -333,6 +333,7 @@ body {
 }
 
     window.onload = shuffle;
+    
   </script>
 <a href="review.html" class="review-btn" target="_blank">📝 Review</a>
 <div class="game-container">
@@ -346,6 +347,13 @@ body {
   <strong><em>Made by Bhavesh</em></strong>
 </footer>
 
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(() => console.log("✅ Service Worker Registered"))
+      .catch(error => console.error("Service Worker registration failed:", error));
+  }
+</script>
 
 </body>
 </html>
