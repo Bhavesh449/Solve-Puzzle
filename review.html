@@ -436,6 +436,15 @@ snapshot.forEach(doc => {
 <footer class="footer-credit">
   <strong><em>Made by Bhavesh</em></strong>
 </footer>
+
+<div id="offlineMessage" style="display: none;">
+  <div class="offline-box">
+    <h2><strong>No Internet Connection</strong></h2>
+    <p>an error has been<br>occurred due to some<br>internet issues</p>
+    <img src="wifi.png" alt="wifi" class="wifi-img">
+    <button onclick="location.reload()">Refresh</button>
+  </div>
+</div>
 <script>
   function checkConnection() {
     if (!navigator.onLine) {
@@ -446,15 +455,6 @@ snapshot.forEach(doc => {
   window.addEventListener("load", checkConnection);
   window.addEventListener("offline", checkConnection);
 </script>
-
-<div id="offlineMessage" style="display: none;">
-  <div class="offline-box">
-    <h2><strong>No Internet Connection</strong></h2>
-    <p>an error has been<br>occurred due to some<br>internet issues</p>
-    <img src="wifi.png" alt="wifi" class="wifi-img">
-    <button onclick="location.reload()">Refresh</button>
-  </div>
-</div>
 
 </body>
 </html>
